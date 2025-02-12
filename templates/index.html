@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compilador Web - darkDot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #444;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .results, .errors {
+            margin-top: 20px;
+        }
+        .results ul, .errors ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .results li, .errors li {
+            background: #e9e9e9;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .error {
+            color: #e63946;
+        }
+        .success {
+            color: #2a9d8f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Compilador Web - darkDot</h1>
+
+        <!-- Formulario para cargar archivo -->
+        <form action="/open-file" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <button type="submit">Abrir</button>
+        </form>
+
+        <!-- Formulario para compilar código -->
+        <form action="/compilar" method="post">
+            <label for="code">Código darkDot:</label><br>
+            <textarea name="code" id="code">{{ code }}</textarea><br>
+            <button type="submit">Compilar</button>
+        </form>
+
+        <!-- Formulario para guardar archivo -->
+        <form action="/save-file" method="post">
+            <input type="hidden" name="code" value="{{ code }}">
+            <button type="submit">Guardar</button>
+        </form>
+
+        <!-- Resultados de tokens -->
+        <div class="results">
+            <h2>Resultados:</h2>
+            <ul>
+                {% for token in tokens %}
+                    <li class="success">{{ token }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Errores de compilación -->
+        <div class="errors">
+            <h3>Errores:</h3>
+            <ul>
+                {% for error in errores %}
+                    <li class="error">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
